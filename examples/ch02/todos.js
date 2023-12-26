@@ -3,7 +3,7 @@ const todos = [
   { description: "Walk  the dog", done: false },
   { description: "Clean the kitchen", done: false },
   { description: "Cook dinner", done: false },
-  { describe: "Wash the car", done: false },
+  { description: "Wash the car", done: false },
 ];
 
 // HTML element references
@@ -31,24 +31,43 @@ addTodoButton.addEventListener("click", () => {
 });
 
 function renderTodoInReadMode(todo) {
-  const todoItem = document.createElement("li");
-  const span = document.createElement("span");
-  span.textContent = todo.description;
-  span.addEventListener("dblclick", () => {
-    const idx = todos.map((item) => item.description).indexOf(todo.description);
-    todosList.replaceChild(renderTodoInEditMode(todo), todosList.children[idx]);
-  });
-  todoItem.append(span);
+  if (!todo.done) {
+    const todoItem = document.createElement("li");
+    const span = document.createElement("span");
+    span.textContent = todo.description;
 
-  const button = document.createElement("button");
-  button.textContent = "Done";
-  button.addEventListener("click", () => {
-    const idx = todos.map((item) => item.description).indexOf(todo.description);
-    removeTodo(idx);
-    // strikeThroughTodo(idx);
-  });
-  todoItem.append(button);
-  return todoItem;
+    span.addEventListener("dblclick", () => {
+      const idx = todos
+        .map((item) => item.description)
+        .indexOf(todo.description);
+      todosList.replaceChild(
+        renderTodoInEditMode(todo),
+        todosList.children[idx]
+      );
+    });
+    todoItem.append(span);
+
+    const button = document.createElement("button");
+    button.textContent = "Done";
+    button.addEventListener("click", () => {
+      console.log("clicked Done");
+      const idx = todos
+        .map((item) => item.description)
+        .indexOf(todo.description);
+      console.log(`Found index: ${idx}`);
+      removeTodo(idx);
+    });
+    todoItem.append(button);
+    return todoItem;
+  } else {
+    const todoItem = document.createElement("li");
+    const span = document.createElement("span");
+    span.textContent = todo.description;
+    span.style = "text-decoration: line-through";
+    todoItem.append(span);
+
+    return todoItem;
+  }
 }
 
 function renderTodoInEditMode(todo) {
@@ -89,27 +108,13 @@ function addTodo() {
 }
 
 function removeTodo(index) {
-  todos.splice(index, 1);
-  todosList.removeChild(todosList.children[index]);
+  todos[index].done = true;
+  const todo = renderTodoInReadMode(todos[index]);
+  todosList.replaceChild(todo, todosList.children[index]);
 }
 
-// function renderStrikedOutTodo(todo) {
-//   const todoItem = document.createElement("li");
-//   const span = document.createElement("span");
-//   span.textContent = todo;
-//   span.style.textDecoration = "line-through";
-//   todoItem.append(span);
-
-//   return todoItem;
-// }
-
-// function strikeThroughTodo(index) {
-//   const todo = renderStrikedOutTodo(todos[index]);
-//   todosList.replaceChild(todo, todosList.children[index]);
-// }
-
 function updateTodo(index, description) {
-  todos[index] = description;
+  todos[index] = { description, done: false };
   const todo = renderTodoInReadMode(todos[index]);
   todosList.replaceChild(todo, todosList.children[index]);
 }
