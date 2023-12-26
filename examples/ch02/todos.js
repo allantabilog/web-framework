@@ -99,6 +99,21 @@ function renderTodoInEditMode(todo) {
 function addTodo() {
   const newTodo = { description: addTodoInput.value, done: false };
 
+  try {
+    validateNewTodo(newTodo);
+  } catch (e) {
+    const errorDiv = document.getElementById("error-message");
+    const errorSpan = document.createElement("span");
+    errorSpan.textContent = e.message;
+    errorSpan.className = "error";
+    errorDiv.append(errorSpan);
+    return;
+  }
+
+  // no errors - remove any existing errors
+  const errorDiv = document.getElementById("error-message");
+  errorDiv.innerHTML = "";
+
   todos.push(newTodo);
   const todo = renderTodoInReadMode(newTodo);
   todosList.append(todo);
@@ -117,4 +132,14 @@ function updateTodo(index, description) {
   todos[index] = { description, done: false };
   const todo = renderTodoInReadMode(todos[index]);
   todosList.replaceChild(todo, todosList.children[index]);
+}
+
+function validateNewTodo(todo) {
+  // ensure no duplicate todos
+  const index = todos.map((item) => item.description).indexOf(todo.description);
+  if (index !== -1) {
+    console.log(`Invalid - duplicate entry: ${todo.description}`);
+    throw new Error("Error - todo item already exists");
+  }
+  console.log(`Valid - new entry: ${todo.description}`);
 }
