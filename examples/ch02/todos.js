@@ -1,9 +1,9 @@
 // the state of the app
 const todos = [
-  "Walk  the dog",
-  "Clean the kitchen",
-  "Cook dinner",
-  "Wash the car",
+  { description: "Walk  the dog", done: false },
+  { description: "Clean the kitchen", done: false },
+  { description: "Cook dinner", done: false },
+  { describe: "Wash the car", done: false },
 ];
 
 // HTML element references
@@ -33,10 +33,9 @@ addTodoButton.addEventListener("click", () => {
 function renderTodoInReadMode(todo) {
   const todoItem = document.createElement("li");
   const span = document.createElement("span");
-  span.textContent = todo;
+  span.textContent = todo.description;
   span.addEventListener("dblclick", () => {
-    const idx = todos.indexOf(todo);
-
+    const idx = todos.map((item) => item.description).indexOf(todo.description);
     todosList.replaceChild(renderTodoInEditMode(todo), todosList.children[idx]);
   });
   todoItem.append(span);
@@ -44,9 +43,9 @@ function renderTodoInReadMode(todo) {
   const button = document.createElement("button");
   button.textContent = "Done";
   button.addEventListener("click", () => {
-    const idx = todos.indexOf(todo);
-    // removeTodo(idx);
-    strikeThroughTodo(idx);
+    const idx = todos.map((item) => item.description).indexOf(todo.description);
+    removeTodo(idx);
+    // strikeThroughTodo(idx);
   });
   todoItem.append(button);
   return todoItem;
@@ -56,13 +55,13 @@ function renderTodoInEditMode(todo) {
   const li = document.createElement("li");
   const input = document.createElement("input");
   input.type = "text";
-  input.value = todo;
+  input.value = todo.description;
   li.append(input);
 
   const saveBtn = document.createElement("button");
   saveBtn.textContent = "Save";
   saveBtn.addEventListener("click", () => {
-    const idx = todos.indexOf(todo);
+    const idx = todos.map((item) => item.description).indexOf(todo.description);
     updateTodo(idx, input.value);
   });
   li.append(saveBtn);
@@ -70,7 +69,7 @@ function renderTodoInEditMode(todo) {
   const cancelBtn = document.createElement("button");
   cancelBtn.textContent = "Cancel";
   cancelBtn.addEventListener("click", () => {
-    const idx = todos.indexOf(todo);
+    const idx = todos.map((item) => item.description).indexOf(todo.description);
     todosList.replaceChild(renderTodoInReadMode(todo), todosList.children[idx]);
   });
   li.append(cancelBtn);
@@ -79,10 +78,10 @@ function renderTodoInEditMode(todo) {
 }
 
 function addTodo() {
-  const description = addTodoInput.value;
+  const newTodo = { description: addTodoInput.value, done: false };
 
-  todos.push(description);
-  const todo = renderTodoInReadMode(description);
+  todos.push(newTodo);
+  const todo = renderTodoInReadMode(newTodo);
   todosList.append(todo);
 
   addTodoInput.value = "";
@@ -94,23 +93,23 @@ function removeTodo(index) {
   todosList.removeChild(todosList.children[index]);
 }
 
-function renderStrikedOutTodo(todo) {
-  const todoItem = document.createElement("li");
-  const span = document.createElement("span");
-  span.textContent = todo;
-  span.style.textDecoration = "line-through";
-  todoItem.append(span);
+// function renderStrikedOutTodo(todo) {
+//   const todoItem = document.createElement("li");
+//   const span = document.createElement("span");
+//   span.textContent = todo;
+//   span.style.textDecoration = "line-through";
+//   todoItem.append(span);
 
-  return todoItem;
-}
+//   return todoItem;
+// }
 
-function strikeThroughTodo(index) {
-  const todo = renderStrikedOutTodo(todos[index]);
-  todosList.replaceChild(todo, todosList.children[index]);
-}
+// function strikeThroughTodo(index) {
+//   const todo = renderStrikedOutTodo(todos[index]);
+//   todosList.replaceChild(todo, todosList.children[index]);
+// }
 
 function updateTodo(index, description) {
   todos[index] = description;
-  const todo = renderTodoInReadMode(description);
+  const todo = renderTodoInReadMode(todos[index]);
   todosList.replaceChild(todo, todosList.children[index]);
 }
