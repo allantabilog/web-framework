@@ -63,7 +63,7 @@ function renderTodoInReadMode(todo) {
     const todoItem = document.createElement("li");
     const span = document.createElement("span");
     span.textContent = todo.description;
-    span.style = "text-decoration: line-through";
+    span.className = "done";
     todoItem.append(span);
 
     return todoItem;

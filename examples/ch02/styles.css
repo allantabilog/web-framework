@@ -34,3 +34,7 @@ button:disabled {
 button:enabled {
   transition: color 1s ease-out;
 }
+
+.done {
+  text-decoration: line-through;
+}
