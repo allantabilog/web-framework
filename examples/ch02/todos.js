@@ -1,6 +1,6 @@
 // the state of the app
 const todos = [
-  { description: "Walk  the dog", done: false },
+  { description: "Walk the dog", done: false },
   { description: "Clean the kitchen", done: false },
   { description: "Cook dinner", done: false },
   { description: "Wash the car", done: false },
@@ -136,7 +136,9 @@ function updateTodo(index, description) {
 
 function validateNewTodo(todo) {
   // ensure no duplicate todos
-  const index = todos.map((item) => item.description).indexOf(todo.description);
+  const index = todos
+    .map((item) => item.description.trim().toLowerCase())
+    .indexOf(todo.description.trim().toLowerCase());
   if (index !== -1) {
     console.log(`Invalid - duplicate entry: ${todo.description}`);
     throw new Error("Error - todo item already exists");
