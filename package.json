@@ -8,7 +8,7 @@
     "packages/runtime"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "serve:examples": "npx http-server -c -1 . -o ./examples/"
   },
   "keywords": [],
