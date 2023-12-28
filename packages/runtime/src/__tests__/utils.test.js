@@ -1,10 +1,11 @@
 import { lipsum } from "../utils/lipsum";
+import { jp } from "../utils/print";
 import { describe, test, expect } from "vitest";
 
 describe("lipsum", () => {
   test("lipsum works", () => {
     let fragment = lipsum(1);
-    console.log(fragment);
+    jp(fragment);
     expect(fragment).toMatchObject({
       type: "fragment",
       children: [
