@@ -2,7 +2,7 @@ import { h, hString } from "../h";
 import { test, expect } from "vitest";
 import { jp, jplog } from "../utils/print";
 
-function todoList(todos) {
+function TodoList(todos) {
   return h(
     "ul",
     {},
@@ -15,8 +15,8 @@ function todoList(todos) {
 // a pure function that takes a todo state and renders a vdom
 test("rendering a vdom from state", () => {
   let todos = [{ description: "Learn JavaScript" }];
-  let todosList1 = todoList(todos);
-  expect(todoList(todos)).toMatchObject({
+  let todosList1 = TodoList(todos);
+  expect(TodoList(todos)).toMatchObject({
     tag: "ul",
     props: {},
     children: [
@@ -31,7 +31,7 @@ test("rendering a vdom from state", () => {
   });
 
   todos = [{ description: "Learn JavaScript" }, { description: "Learn Rust" }];
-  expect(todoList(todos)).toMatchObject({
+  expect(TodoList(todos)).toMatchObject({
     tag: "ul",
     props: {},
     children: [
