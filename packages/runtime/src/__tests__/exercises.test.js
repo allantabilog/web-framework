@@ -2,11 +2,10 @@ import { h } from "../h";
 import { test, expect } from "vitest";
 import { jplog } from "../utils/print";
 
-function MessageComponent(message) {
-  return h("div", { class: `message message--${message.level}` }, [
+const MessageComponent = (message) =>
+  h("div", { class: `message message--${message.level}` }, [
     h("p", {}, [message.text]),
   ]);
-}
 
 test("renders an info message component", () => {
   let message1 = MessageComponent({ level: "info", text: "Hello world" });
