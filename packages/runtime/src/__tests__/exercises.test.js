@@ -1,26 +1,10 @@
-import { h, hString } from "../h";
+import { h } from "../h";
 import { test, expect } from "vitest";
 import { jplog } from "../utils/print";
 
 function MessageComponent(message) {
-  let className = "";
-
-  switch (message.level) {
-    case "info":
-      className = "message--info";
-      break;
-    case "warning":
-      className = "message--warning";
-      break;
-    case "error":
-      className = "message--error";
-      break;
-    default:
-      throw new Error(`Unknown message level ${message.level}`);
-  }
-
-  return h("div", { class: `message ${className}` }, [
-    h("p", {}, [hString(message.text)]),
+  return h("div", { class: `message message--${message.level}` }, [
+    h("p", {}, [message.text]),
   ]);
 }
 
