@@ -18,10 +18,23 @@ describe("mountDOM tests", () => {
     global.window = jsdom.window;
 
     // create a vdom
-    const vdom = h("div", {}, [h("h1", {}, [hString("Interesting article")])]);
+    const vdom = hString("Hello world");
     // mount it to a DOM node
     mountDOM(vdom, jsdom.window.document.body);
     // test the generated DOM
-    console.log(jsdom.window.document.body.innerHTML);
+    console.log(`Updated dom: ${jsdom.window.document.body.innerHTML}`);
+    jplog(vdom);
+  });
+});
+
+describe("getting started with jsdom", () => {
+  test("jsdom hello world", () => {
+    let dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
+    console.log(dom.window.document.querySelector("p").textContent); // "Hello world"
+
+    let p = dom.window.document.querySelector("p");
+    p.innerHTML = "Hello world 2";
+
+    console.log(dom.window.document.querySelector("p").textContent); // "Hello world 2"
   });
 });
