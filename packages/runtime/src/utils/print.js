@@ -1,6 +1,6 @@
 // print a JSON object
 
-export function jp(obj, indent, description) {
+export function jp(obj, description, indent) {
   let message = "";
   if (description == undefined) {
     description = "log";
@@ -16,6 +16,6 @@ export function jp(obj, indent, description) {
   return message;
 }
 
-export function jplog(obj, indent, description) {
-  console.log(jp(obj, indent, description));
+export function jplog(obj, description, indent) {
+  console.log(jp(obj, description, indent));
 }

@@ -34,8 +34,8 @@ describe("mountDOM tests", () => {
     // mount it to a DOM node
     mountDOM(vdom, jsdom.window.document.body);
     // test the generated DOM
-    console.log(`Updated dom: ${jsdom.window.document.body.innerHTML}`);
-    jplog(vdom, 2, "vdom");
+    jplog(vdom, "vdom", 2);
+    jplog(jsdom.window.document.body, "jsdom");
   });
 
   test("simple test 2", () => {
@@ -45,7 +45,7 @@ describe("mountDOM tests", () => {
     ]);
 
     mountDOM(vdom, jsdom.window.document.body);
-    jplog(vdom);
-    jplog(jsdom.window.document.body.innerHTML);
+    jplog(vdom, "vdom");
+    jplog(jsdom.window.document.body.innerHTML, "jdom");
   });
 });
