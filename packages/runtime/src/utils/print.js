@@ -1,13 +1,21 @@
 // print a JSON object
 
-export function jp(obj, indent) {
-  return indent ? JSON.stringify(obj, null, indent) : JSON.stringify(obj);
+export function jp(obj, indent, description) {
+  let message = "";
+  if (description == undefined) {
+    description = "log";
+  }
+  if (indent == undefined) {
+    indent = 0;
+  }
+  message += description + ": ";
+  message += indent
+    ? `${JSON.stringify(obj, null, indent)}`
+    : `${JSON.stringify(obj)}`;
+
+  return message;
 }
 
-export function jplog(obj, indent) {
-  if (indent) {
-    console.log(jp(obj, indent));
-  } else {
-    console.log(jp(obj));
-  }
+export function jplog(obj, indent, description) {
+  console.log(jp(obj, indent, description));
 }

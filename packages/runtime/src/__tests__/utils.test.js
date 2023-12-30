@@ -18,3 +18,10 @@ describe("lipsum", () => {
     });
   });
 });
+
+describe("jplog tests", () => {
+  test("test jplog", () => {
+    expect(jp({ name: "joe" })).toBe('log: {"name":"joe"}');
+    expect(jp({ name: "joe" }, 0, "logging")).toBe('logging: {"name":"joe"}');
+  });
+});
