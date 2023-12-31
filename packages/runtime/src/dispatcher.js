@@ -28,12 +28,12 @@ export class Dispatcher {
     };
   }
 
-  dispatcher(commandName, payload) {
-    if (this.#subs.had(commandName)) {
+  dispatch(commandName, payload) {
+    if (this.#subs.has(commandName)) {
       this.#subs.get(commandName).forEach((handler) => handler(payload));
     } else {
       console.warn(`No handlers for the command: ${commandName}`);
     }
-    this.#afterHandlers.forEach(handler);
+    this.#afterHandlers.forEach((handler) => handler());
   }
 }
