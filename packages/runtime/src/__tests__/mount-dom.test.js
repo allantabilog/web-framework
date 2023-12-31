@@ -2,6 +2,7 @@ import { describe, test, expect, beforeAll } from "vitest";
 import { jplog } from "../utils/print";
 import { h, hString } from "../h";
 import { mountDOM } from "../mount-dom";
+import { destroyDOM } from "../destroy-dom";
 import { JSDOM } from "jsdom";
 
 /**
@@ -20,7 +21,7 @@ describe("getting started with jsdom", () => {
   });
 });
 
-const jsdom = new JSDOM(`<!DOCTYPE html><body></body>`);
+const jsdom = new JSDOM(`<!DOCTYPE html><body><div id='app'></div></body>`);
 describe("mountDOM tests", () => {
   beforeAll(() => {
     // get the window object out of the JSDOM instance, etc.
@@ -32,10 +33,13 @@ describe("mountDOM tests", () => {
     // create a vdom
     const vdom = hString("Hello world");
     // mount it to a DOM node
-    mountDOM(vdom, jsdom.window.document.body);
+    let app = document.getElementById("app");
+    mountDOM(vdom, app);
     // test the generated DOM
     jplog(vdom, "vdom", 2);
-    jplog(jsdom.window.document.body, "jsdom");
+    jplog(app, "jsdom");
+    // remove the mounted DOM
+    destroyDOM(vdom, app);
   });
 
   test("simple test 2", () => {
@@ -44,8 +48,10 @@ describe("mountDOM tests", () => {
       h("p", {}, ["Welcome to my blog!"]),
     ]);
 
-    mountDOM(vdom, jsdom.window.document.body);
+    let app = document.getElementById("app");
+    mountDOM(vdom, app);
     jplog(vdom, "vdom");
     jplog(jsdom.window.document.body.innerHTML, "jdom");
+    destroyDOM(vdom, app);
   });
 });
