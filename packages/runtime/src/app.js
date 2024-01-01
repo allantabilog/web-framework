@@ -33,6 +33,7 @@ export function createApp({ state, view, reducers = {} }) {
   function renderApp() {
     if (vdom) {
       // if there is a vdom, destroy it. we'll rebuild it from new state
+      // this is inefficient, but it's the simplest way for initial version
       destroyDOM(vdom);
     }
 
