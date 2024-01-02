@@ -1,4 +1,4 @@
-import { destroyEventListeners, removeEventListeners } from "./events.js";
+import { removeEventListeners } from "./events.js";
 import { DOM_TYPES } from "./h";
 
 export function destroyDOM(vdom) {

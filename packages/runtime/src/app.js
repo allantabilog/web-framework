@@ -37,7 +37,7 @@ export function createApp({ state, view, reducers = {} }) {
       destroyDOM(vdom);
     }
 
-    vdom = view(state); // recalculate the vdom based in the current state
+    vdom = view(state, emit); // recalculate the vdom based in the current state
     mountDOM(vdom, parentEl); // remount the vdom
   }
 
