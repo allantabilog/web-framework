@@ -1,7 +1,15 @@
 export class Dispatcher {
-  #subs = new Map();
-  #afterHandlers = [];
+  #subs = new Map(); // a map of command names to (a list of) handlers
+  #afterHandlers = []; // a set of functions to run after every command
+  // e.g. use this to trigger a re-render after state updates
 
+  /**
+   * Subscribe to a command.
+   * i.e. associate a list of handlers to a command name.
+   * @param {commandName} the name of the command to handle
+   * @param {handler} the handler function
+   * @returns a function to unsubscribe the handler to be used later when the component is unmounted
+   */
   subscribe(commandName, handler) {
     if (!this.#subs.has(commandName)) {
       this.#subs.set(commandName, []);
@@ -19,6 +27,11 @@ export class Dispatcher {
     };
   }
 
+  /**
+   * Register a function to execute after every command.
+   * @param {handler} the function to execute
+   * @returns a de-registering function to be used later when the component is unmounted
+   */
   afterEveryCommand(handler) {
     this.#afterHandlers.push(handler);
 
@@ -28,6 +41,11 @@ export class Dispatcher {
     };
   }
 
+  /**
+   *
+   * @param {commandName} the command to dispatch
+   * @param {payload} any additional data to pass to the handler
+   */
   dispatch(commandName, payload) {
     if (this.#subs.has(commandName)) {
       this.#subs.get(commandName).forEach((handler) => handler(payload));
